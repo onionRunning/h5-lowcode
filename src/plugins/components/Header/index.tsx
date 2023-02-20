@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {
   paddingCss,
   paddingCssSchema,
@@ -11,13 +11,19 @@ import {
 import style from './index.module.scss'
 
 export const Header = ({text, ...oth}) => {
-  // console.info(oth, '----')
+  const [imgStyle, setImgStyle] = useState({})
+  console.info(oth, '----')
+  const enterEditor = () => {
+    console.info('进入编辑状态')
+    setImgStyle({border: '1px dashed #fao'})
+  }
+  console.info(imgStyle, 'imgStyle')
   return (
     <div className={style.wrapper} style={{...oth}}>
       {/* 左边 */}
-      <img alt="close" src="/common/close.png" />
+      <img alt="close" onClick={enterEditor} src="/common/close.png" style={imgStyle} />
       {/* 中间 */}
-      <span>{oth?.centerText}</span>
+      {/* <span>{oth?.centerText}</span> */}
       {/* 右边 */}
       <span>{oth?.rightText || ''}</span>
     </div>
@@ -26,23 +32,19 @@ export const Header = ({text, ...oth}) => {
 
 Header.defaultProps = {
   text: '右边',
-  bgcolor: '#fa0',
+  backgroundColor: '#fa0',
   height: 48,
   fontSize: 16,
   color: '#fff',
   centerText: '标题内容',
-  rightText: '右边',
+  rightText: '取消',
 }
 ;(Header as any).schema = {
   rightText: {
-    title: '右边内容',
+    title: '右边默认值',
     type: 'rightText',
   },
-  centerText: {
-    title: '中间内容',
-    type: 'centerText',
-  },
-  bgcolor: {
+  backgroundColor: {
     title: '背景色',
     type: 'color',
   },

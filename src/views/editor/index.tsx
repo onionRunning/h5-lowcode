@@ -1,5 +1,5 @@
 import {plugins} from './plugins'
-import {Editor} from './Editor'
+import {Editor} from './editor'
 import {renderPage} from './renderPage'
 import {
   paddingCss,

@@ -11,6 +11,7 @@ const {TabPane} = Tabs
 
 interface IProps {
   component: IComponent | null
+  componentIndex: number
   setting: IPageSetting | null
   onPropsChange(props: Pick<IComponent, 'props'>): void
   onFunctionsChange(): void
@@ -20,12 +21,14 @@ interface IProps {
 
 export const Editor: React.FC<IProps> = ({
   component = null,
+  componentIndex,
   setting = null,
   onPropsChange,
   onFunctionsChange,
   onSettingChange,
   onClose,
 }) => {
+  console.info(componentIndex, '页面编辑:componentIndex')
   return (
     <div className={style.wrapper}>
       <h3>

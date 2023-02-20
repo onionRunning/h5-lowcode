@@ -150,7 +150,7 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
             visible={componentPannelVisible}
           />
         </div>
-        {/* 预览区 */}
+        {/* 预览组件区 */}
         <Preview
           components={components}
           mode={mode}
@@ -175,6 +175,7 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
           {/* 右边编辑区 */}
           <PropsEditor
             component={current}
+            componentIndex={currentIndex}
             onClose={() => setPropsEditorVisible(false)}
             onFunctionsChange={unsafeUpdate}
             onPropsChange={editCurrentComponentProps}

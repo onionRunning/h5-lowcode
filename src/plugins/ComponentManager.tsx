@@ -9,8 +9,8 @@ import {Footer} from './components/Footer'
 import {ImgTextList} from './components/List'
 import {Header} from './components/Header'
 
-// plugins.components.register('Header', Header)
-// plugins.components.addToGroup('头部', ['Header'])
+plugins.components.register('Header', Header)
+plugins.components.addToGroup('头部', ['Header'])
 
 // plugins.components.register('BaseTitle', BaseTitle);
 // plugins.components.register('LeftBorderTitle', LeftBorderTitle);

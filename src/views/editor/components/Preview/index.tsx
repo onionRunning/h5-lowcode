@@ -154,6 +154,7 @@ export const Preview: React.FC<any> = ({
                                   onEdit(index)
                                 }}
                               />
+                              {/* 组件操作 */}
                               <div className={style.toolboxWrapper}>
                                 <ul>
                                   <li>
