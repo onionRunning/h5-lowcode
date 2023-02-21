@@ -1,13 +1,4 @@
 import React, {useState} from 'react'
-import {
-  paddingCss,
-  paddingCssSchema,
-  marginCss,
-  marginCssSchema,
-  fontCss,
-  fontCssSchema,
-  transformStyle,
-} from '@/views/editor'
 import style from './index.module.scss'
 
 export const Header = ({text, ...oth}) => {
@@ -38,8 +29,30 @@ Header.defaultProps = {
   color: '#fff',
   centerText: '标题内容',
   rightText: '取消',
+  id: 'header-only',
 }
+Header.defaultFns = `
+$('leftIconId').addEventListener('click', () => {
+  //
+})
+
+$('rightTextId').addEventListener('click', () => {
+  window?.webkit?.messageHandlers?.vip_restore?.postMessage?.({type: "restore_web"})
+})
+`
 ;(Header as any).schema = {
+  id: {
+    title: '组件唯一id',
+    type: 'id',
+  },
+  iconId: {
+    title: '左边iconId',
+    type: 'id',
+  },
+  rightId: {
+    title: '右边文字id',
+    type: 'id',
+  },
   rightText: {
     title: '右边默认值',
     type: 'rightText',

@@ -38,5 +38,6 @@ export interface IComponentData {
 
 // 组件数据结构
 export interface IComponent extends IComponentData {
-  fns: IComponentData[]
+  defaultFns?: string
+  fns: string
 }

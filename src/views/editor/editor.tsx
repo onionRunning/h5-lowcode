@@ -8,6 +8,7 @@ import {Pannel} from './components/Pannel'
 import {Preview} from './components/Preview'
 import {Editor as PropsEditor} from './components/Editor'
 import style from './index.module.scss'
+import {createHtml} from '@/global/tools'
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -21,6 +22,7 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
   const [loading, setLoading] = useState<boolean>(false)
 
   const [mode, setMode] = useState<Mode>('edit')
+  const [isPre, setPre] = useState({isShow: false, content: ''})
   const [componentPannelVisible, setComponentPannelVisible] = useState<boolean>(true)
   const [propsEditorVisible, setPropsEditorVisible] = useState<boolean>(true)
   const [pageSetting, setPageSetting] = useState<IPageSetting>(Object.create(null))
@@ -39,7 +41,7 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
       const target = clone(components[index])
       target.props = target.defaultProps
       target.id = `${components.length}`
-      target.fns = []
+      target.fns = target.defaultFns
       // eslint-disable-next-line @typescript-eslint/restrict-plus-operands
       components.splice(index + 1, 0, target)
       return components
@@ -52,6 +54,7 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
     setComponents(components => {
       const target = clone(components[currentIndex])
       target.props = newProps
+      console.info(target.props, '-----six')
       components.splice(currentIndex, 1, target)
       setCurrent(target)
       return components
@@ -117,21 +120,32 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
         name: component.name,
         props: component.props,
         schema: component.schema,
-        fns: component.fns.map(fn => ({
-          name: fn.name,
-          props: fn.props,
-          schema: fn.schema,
-        })),
+        fns: component.fns,
       }
     })
-    console.info(data, '------------------>')
+    console.info(createHtml(data), '------------------>')
     setLoading(false)
   }
 
+  const onPre = () => {
+    const data = components.map((component: any) => {
+      return {
+        id: component.id,
+        name: component.name,
+        props: component.props,
+        schema: component.schema,
+        fns: component.fns,
+      }
+    })
+    console.info(createHtml(data), '------------------>')
+    setPre({isShow: true, content: createHtml(data)})
+  }
+
+  console.info(isPre.content, 'components123')
   return (
     <div className={style.wrapper}>
       {/* 头部区域 */}
-      <Header loading={loading} onPreview={() => setMode('preview')} onSave={save} />
+      <Header loading={loading} onPreview={() => onPre()} onSave={save} />
       <main>
         <div
           className={cls(
@@ -187,6 +201,13 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
           />
         </div>
       </main>
+
+      {isPre.isShow && (
+        <div className={style.preview}>
+          <div className={style.previewContent} dangerouslySetInnerHTML={{__html: isPre.content}} />
+          {/* <iframe className={style.previewContent} src={isPre.content} /> */}
+        </div>
+      )}
     </div>
   )
 }

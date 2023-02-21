@@ -55,7 +55,8 @@ export const Pannel: React.FC<IProps> = ({visible, onSelect, onOpen, onClose}) =
                           schema: Component.schema,
                           props: Component.defaultProps,
                           defaultProps: Component.defaultProps,
-                          fns: [],
+                          fns: Component.defaultFns,
+                          defaultFns: Component.defaultFns,
                         })
                       }}
                     />

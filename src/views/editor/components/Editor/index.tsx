@@ -1,11 +1,10 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {CloseOutlined} from '@ant-design/icons'
 import {Tabs} from 'antd'
 import {IComponent, IPageSetting} from '../../type'
 import {PropsEditor} from './PropsEditor'
-import {FunctionEditor} from './FunctionEditor'
-import {SettingEditor} from './SettingEditor'
 import style from './index.module.scss'
+import FnEditor from './FnEditor'
 
 const {TabPane} = Tabs
 
@@ -21,14 +20,18 @@ interface IProps {
 
 export const Editor: React.FC<IProps> = ({
   component = null,
-  componentIndex,
-  setting = null,
   onPropsChange,
   onFunctionsChange,
-  onSettingChange,
   onClose,
 }) => {
-  console.info(componentIndex, '页面编辑:componentIndex')
+  // console.info(componentIndex, '页面编辑:componentIndex', component)
+  const [keys, setKeys] = useState('')
+
+  const getTabs = e => {
+    // console.info(e)
+    setKeys(e)
+  }
+
   return (
     <div className={style.wrapper}>
       <h3>
@@ -36,13 +39,15 @@ export const Editor: React.FC<IProps> = ({
         <CloseOutlined onClick={onClose} />
       </h3>
       <main>
-        <Tabs defaultActiveKey="props" size="small">
+        <Tabs defaultActiveKey="props" onChange={getTabs} size="small">
           <TabPane key="props" tab="属性">
             <PropsEditor component={component} onChange={onPropsChange} />
           </TabPane>
-          {/* <TabPane key="function" tab="函数">
-            <FunctionEditor
-              fns={(component && component.fns) || []}
+          <TabPane key="function" tab="函数">
+            <FnEditor
+              contents={component?.props}
+              fns={(component && component.fns) || component?.defaultFns || ''}
+              key={keys}
               onChange={fns => {
                 if (!component) {
                   return
@@ -51,7 +56,7 @@ export const Editor: React.FC<IProps> = ({
                 onFunctionsChange()
               }}
             />
-          </TabPane> */}
+          </TabPane>
           {/* <TabPane key="setting" tab="页面设置">
             <SettingEditor onChange={onSettingChange} setting={setting} />
           </TabPane> */}

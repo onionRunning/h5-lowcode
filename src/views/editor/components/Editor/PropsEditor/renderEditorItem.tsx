@@ -42,6 +42,7 @@ export const renderEditorItem = (key, propsValue, schema, onChange) => {
       break
     case 'rightText':
     case 'centerText':
+    case 'id':
       TargetEditor = TextEditor
       break
 
