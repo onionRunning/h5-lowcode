@@ -9,6 +9,7 @@ import {Preview} from './components/Preview'
 import {Editor as PropsEditor} from './components/Editor'
 import style from './index.module.scss'
 import {createHtml} from '@/global/tools'
+import {downloadHtml} from '@/global/utils'
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -125,6 +126,7 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
     })
     console.info(createHtml(data), '------------------>')
     setLoading(false)
+    downloadHtml(createHtml(data))
   }
 
   const onPre = () => {
@@ -204,8 +206,11 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
 
       {isPre.isShow && (
         <div className={style.preview}>
-          <div className={style.previewContent} dangerouslySetInnerHTML={{__html: isPre.content}} />
-          {/* <iframe className={style.previewContent} src={isPre.content} /> */}
+          {/* <div className={style.previewContent} dangerouslySetInnerHTML={{__html: isPre.content}} /> */}
+          <iframe className={style.previewContent} srcDoc={isPre.content} />
+          <div className={style.close} onClick={() => setPre({isShow: false, content: ''})}>
+            关闭预览
+          </div>
         </div>
       )}
     </div>

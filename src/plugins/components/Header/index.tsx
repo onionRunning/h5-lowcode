@@ -32,13 +32,13 @@ Header.defaultProps = {
   id: 'header-only',
 }
 Header.defaultFns = `
-$('leftIconId').addEventListener('click', () => {
-  //
-})
+      $('leftIconId').addEventListener('click', () => {
+        //
+      })
 
-$('rightTextId').addEventListener('click', () => {
-  window?.webkit?.messageHandlers?.vip_restore?.postMessage?.({type: "restore_web"})
-})
+      $('rightTextId').addEventListener('click', () => {
+        window?.webkit?.messageHandlers?.vip_restore?.postMessage?.({type: "restore_web"})
+      })
 `
 ;(Header as any).schema = {
   id: {

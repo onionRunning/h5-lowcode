@@ -20,3 +20,14 @@ export const randomRange = (min: number) => {
   autoGetStr()
   return returnStr
 }
+
+export const downloadHtml = (htmlString: string) => {
+  const blob = new Blob([htmlString], {type: 'text/html'})
+  const url = URL.createObjectURL(blob)
+  const link = document.createElement('a')
+  link.href = url
+  link.download = 'my-html-template.html'
+  document.body.appendChild(link)
+  link.click()
+  document.body.removeChild(link)
+}

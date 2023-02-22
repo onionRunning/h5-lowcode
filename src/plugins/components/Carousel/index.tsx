@@ -1,23 +1,25 @@
 import React from 'react'
 import {Carousel as ACarousel} from 'antd'
-import {
-  paddingCss,
-  paddingCssSchema,
-  marginCss,
-  marginCssSchema,
-  fontCss,
-  fontCssSchema,
-  transformStyle,
-} from '@/views/editor'
+import {transformStyle} from '@/views/editor'
 import style from './index.module.scss'
 
-export const Carousel = ({autoplay, dotPosition, carousels = [], style: commonStyle}) => {
-  console.info(carousels, 'carousels')
+export const Carousel = ({autoplay, dotPosition, carousels = [], style: commonStyle, ...oth}) => {
+  const sty = oth.imgHeight ? {height: oth.imgHeight} : {}
+  const carSty = oth.height ? {height: oth.height} : {}
+
+  console.info(sty, 'carousels')
   return (
     <div className={style.wrapper} style={transformStyle(commonStyle)}>
-      <ACarousel autoplay={autoplay} dotPosition={dotPosition}>
+      <ACarousel autoplay={autoplay} dotPosition={dotPosition} style={carSty}>
         {carousels.map((carousel, index) => {
-          return <img key={index} onClick={() => window.open(carousel.link)} src={carousel.url} />
+          return (
+            <img
+              key={index}
+              onClick={() => window.open(carousel.link)}
+              src={carousel.url}
+              style={sty}
+            />
+          )
         })}
       </ACarousel>
     </div>
@@ -26,36 +28,25 @@ export const Carousel = ({autoplay, dotPosition, carousels = [], style: commonSt
 
 Carousel.defaultProps = {
   autoplay: false,
-  dotPosition: 'bottom',
   carousels: [
     {
-      url: '/common/zw.png',
+      url: '//gd2.alicdn.com/imgextra/i1/1094533563/TB2BFUoxH1YBuNjSszhXXcUsFXa_!!1094533563.jpg_400x400.jpg',
       link: '',
     },
     {
-      url: '/common/close.png',
+      url: 'https://seopic.699pic.com/photo/40005/6885.jpg_wh1200.jpg',
       link: '',
     },
     {
-      url: '/common/zw.png',
+      url: 'http://t14.baidu.com/it/u=3047410229,4044637632&fm=224&app=112&f=JPEG?w=500&h=500',
       link: '',
     },
   ],
-  style: {
-    margin: marginCss,
-    padding: paddingCss,
-    font: fontCss,
-  },
 }
 ;(Carousel as any).schema = {
   autoplay: {
     type: 'switch',
     title: '自动播放',
-  },
-  dotPosition: {
-    title: '指点位置',
-    type: 'radio',
-    options: ['top', 'bottom', 'left', 'right'],
   },
   carousels: {
     type: 'children',
@@ -65,8 +56,8 @@ Carousel.defaultProps = {
       url: {
         title: '图片链接',
         type: 'img',
-        width: 686,
-        height: 180,
+        // width: 686,
+        // height: 180,
       },
       link: {
         title: '跳转链接',
@@ -74,13 +65,8 @@ Carousel.defaultProps = {
       },
     },
   },
-  style: {
-    type: 'children',
-    title: '基本样式',
-    schema: {
-      margin: marginCssSchema,
-      padding: paddingCssSchema,
-      font: fontCssSchema,
-    },
+  height: {
+    title: '轮播高度',
+    type: 'number',
   },
 }

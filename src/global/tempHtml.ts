@@ -20,12 +20,9 @@ export const htmlTemplate = (htmlStr: string, cssStr: string, jsStr: string) => 
   </div>
   <script>
     window.onload = function() {
-      //
       ${jsStr}
     }
   </script>            
 </body>
 </html>
-
-
 `

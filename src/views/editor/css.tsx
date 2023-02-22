@@ -85,18 +85,18 @@ export const marginCssSchema = {
 export const transformStyle = style => {
   const ret = {} as any
 
-  if (style.font) {
+  if (style?.font) {
     Object.assign(ret, style.font)
   }
 
-  if (style.padding) {
+  if (style?.padding) {
     ret.padding = ``
     void ['paddingTop', 'paddingRight', 'paddingBottom', 'paddingLeft'].forEach(key => {
       ret.padding += ` ${style.padding[key]}px`
     })
   }
 
-  if (style.margin) {
+  if (style?.margin) {
     ret.margin = ``
     void ['marginTop', 'marginRight', 'marginBottom', 'marginLeft'].forEach(key => {
       ret.margin += ` ${style.margin[key]}px`
