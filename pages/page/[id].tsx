@@ -1,17 +1,15 @@
-import React, { useEffect, useRef } from 'react';
-import { NextPage } from 'next';
-import { PageProvider } from 'api/page';
-import { renderPage } from '@/views/editor';
-import style from './index.module.scss';
+import React, {useEffect, useRef} from 'react'
+import {NextPage} from 'next'
+import {renderPage} from '@/views/editor'
+import style from './index.module.scss'
 
-const Page: NextPage<any> = ({ page }) => {
-  return <div className={style.wrapper}>{renderPage(page)}</div>;
-};
+const Page: NextPage<any> = ({page}) => {
+  return <div className={style.wrapper}>{renderPage(page)}</div>
+}
 
 Page.getInitialProps = async ctx => {
-  const { id } = ctx.query;
-  const page = await PageProvider.getPage(id);
-  return { page };
-};
+  const {id} = ctx.query
+  return {page: {}}
+}
 
-export default Page;
+export default Page
