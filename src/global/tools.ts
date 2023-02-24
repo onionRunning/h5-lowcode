@@ -156,6 +156,7 @@ const carouseCssStr = data => {
 }
 
 const carouseJsStr = data => {
+  const l = data.props.carousels?.length - 1
   const auto = data.props.autoplay
     ? `
         function autoMove() {
@@ -164,7 +165,7 @@ const carouseJsStr = data => {
                   clearInterval(nTimer)
                   return
               }
-              if (index === 2) {
+              if (index === ${l}) {
                   index = - 1
               }
               index++
@@ -216,55 +217,47 @@ const carouseJsStr = data => {
         let index = 0
         let moveCount = 0
 
-        if (bannerImg.touchstart) {
-          bannerImg.addEventListener("touchstart", (e) => {
-            startX = e.touches[0].clientX //记录X位置
-          })
-        }
-        if (bannerImg.touchmove) {
-          bannerImg.addEventListener('touchmove', (e) => {
-            moveX = e.touches[0].clientX
-            moveCount+=1
-            distanceX = moveX - startX //滑动的距离
-            if (distanceX > 0 && index <= 0) {
-                return
-            } else if (distanceX < 0 && index >= 3) {
-                return
-            }
-            removeTransition() //停止过渡
-            setTransform(-index * width + distanceX) //跟着动
-            isMove = true //正在滑动
-          })
-        }
+        bannerImg.addEventListener("touchstart", (e) => {
+          startX = e.touches[0].clientX //记录X位置
+        })
+        bannerImg.addEventListener('touchmove', (e) => {
+          moveX = e.touches[0].clientX
+          moveCount+=1
+          distanceX = moveX - startX //滑动的距离
+          if (distanceX > 0 && index <= 0) {
+              return
+          } else if (distanceX < 0 && index >= ${l}) {
+              return
+          }
+          removeTransition() //停止过渡
+          setTransform(-index * width + distanceX) //跟着动
+          isMove = true //正在滑动
+        })
 
-        const touch = bannerImg.touchend ? 'touchend' : 'mouseup'
-        if (bannerImg.touchend) {
-          bannerImg.addEventListener('touchend', (e) => {
-            //滑动距离要大于屏幕1/100
-            moveCount+=1
+        bannerImg.addEventListener('touchend', (e) => {
+          //滑动距离要大于屏幕1/100
+          moveCount+=1
 
-            if (isMove && Math.abs(distanceX) > width / 100) {
-                if (index <= 0 && distanceX > 0) return
-                if (index >= 3 && distanceX < 0) return
-                if (distanceX > 0) {
-                    index--
-                    console.log("向右滑", index);
-                } else {
-                    index++
-                    console.log("向左滑", index);
-                }
-            }
-            //吸附效果
-            addTransition()
-            setTransform(-index * width)
-            setOpacity(index)
-            //重置
-            startX = 0
-            moveX = 0
-            distanceX = 0
-            isMove = false
-          })
-        }
+          if (isMove && Math.abs(distanceX) > width / 100) {
+              if (index <= 0 && distanceX > 0) return
+              if (index >= ${l}> 0) {
+                  index--
+                  console.log("向右滑", index);
+              } else {
+                  index++
+                  console.log("向左滑", index);
+              }
+          }
+          //吸附效果
+          addTransition()
+          setTransform(-index * width)
+          setOpacity(index)
+          //重置
+          startX = 0
+          moveX = 0
+          distanceX = 0
+          isMove = false
+        })
         ${auto}  
       }
       start${data.id}()
