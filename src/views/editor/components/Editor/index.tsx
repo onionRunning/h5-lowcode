@@ -20,6 +20,7 @@ interface IProps {
 
 export const Editor: React.FC<IProps> = ({
   component = null,
+  componentIndex,
   onPropsChange,
   onFunctionsChange,
   onClose,

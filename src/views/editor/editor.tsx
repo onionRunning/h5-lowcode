@@ -139,7 +139,7 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
         fns: component.fns,
       }
     })
-    console.info(createHtml(data), '------------------>')
+    console.info(data, '------------------>')
     setPre({isShow: true, content: createHtml(data)})
   }
 

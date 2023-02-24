@@ -30,7 +30,7 @@ Carousel.defaultProps = {
   autoplay: false,
   carousels: [
     {
-      url: '//gd2.alicdn.com/imgextra/i1/1094533563/TB2BFUoxH1YBuNjSszhXXcUsFXa_!!1094533563.jpg_400x400.jpg',
+      url: 'https://gd2.alicdn.com/imgextra/i1/1094533563/TB2BFUoxH1YBuNjSszhXXcUsFXa_!!1094533563.jpg_400x400.jpg',
       link: '',
     },
     {
