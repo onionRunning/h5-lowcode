@@ -1,0 +1,23 @@
+.block {
+    width: 100%;
+    min-height: 48px;
+    height: auto;
+    background-color: #efefef;
+}
+
+.ph {
+    color: #fa0;
+    padding: 16px;
+}
+
+.img {
+    padding: 16px;
+}
+
+.btn {
+    padding: 16px;
+}
+
+.normal {
+    padding: 16px;
+}

@@ -1,6 +1,6 @@
 import cls from 'classnames'
 import React, {useState, useRef, useEffect} from 'react'
-import {Divider, Tooltip} from 'antd'
+import {Card, Divider, Modal, Tooltip} from 'antd'
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd'
 import {
   ArrowUpOutlined,
@@ -8,6 +8,7 @@ import {
   DeleteOutlined,
   CopyOutlined,
   CloseOutlined,
+  UserAddOutlined,
 } from '@ant-design/icons'
 import {Mode, IComponent, IPageSetting} from '../../type'
 import {transformPageStyle} from '../../renderPage'
@@ -27,6 +28,8 @@ const getListStyle = isDraggingOver => ({
   width: '100%',
 })
 
+const gridStyle = {width: '25%', textAlign: 'center', marginRight: '10px'} as React.CSSProperties
+
 const COMPONENT_COVER_WRAPPER_ID_PREFIX = 'ramiko_component_cover_wrapper_'
 
 export const Preview: React.FC<any> = ({
@@ -39,6 +42,7 @@ export const Preview: React.FC<any> = ({
   onEdit,
   onCopy,
   onDelete,
+  updateComponents,
 }) => {
   const isEdit = mode === 'edit'
   const pageStyle = transformPageStyle({setting})
@@ -62,7 +66,7 @@ export const Preview: React.FC<any> = ({
     return () => {
       clearTimeout(timer)
     }
-  }, [components.length])
+  }, [components])
 
   const moveComponent = direction => {
     let newComponent
@@ -108,6 +112,35 @@ export const Preview: React.FC<any> = ({
     handleSwap(+result.source.index, +result.destination.index)
   }
 
+  const addChildren = (type: string, i: number) => () => {
+    console.info(type, i, components)
+    updateComponents(type, i)
+  }
+
+  // 打开子组件弹窗
+  const addChildComponent = (i: number) => () => {
+    console.info('six', i)
+    Modal.info({
+      style: {left: 20, bottom: 20},
+      title: '可选择下列子组件插入块级组件中',
+      content: (
+        <div className={style.confirm5e}>
+          <div onClick={addChildren('ph', i)}>段落</div>
+          <div onClick={addChildren('img', i)}>图片</div>
+          <div onClick={addChildren('btn', i)}>按钮</div>
+        </div>
+      ),
+      onOk: () => {
+        //
+      },
+    })
+  }
+
+  const updateProps = (...t: any) => {
+    console.info(t)
+  }
+
+  console.info(components, 'components-------------------update')
   return (
     <div className={cls(style.wrapper, isEdit ? false : style.isPreview)}>
       <div
@@ -152,8 +185,11 @@ export const Preview: React.FC<any> = ({
                                   setCurrent(component)
                                   setCurrentIndex(index)
                                   onEdit(index)
-                                }}
-                              />
+                                }}>
+                                <div className={style.componentInstanceWrapper}>
+                                  {renderComponent({component, isEdit, updateProps})}
+                                </div>
+                              </div>
                               {/* 组件操作 */}
                               <div className={style.toolboxWrapper}>
                                 <ul>
@@ -176,13 +212,20 @@ export const Preview: React.FC<any> = ({
                                       <DeleteOutlined onClick={deleteComponent} />
                                     </li>
                                   </Tooltip>
+                                  {component.name === 'Block' && (
+                                    <Tooltip placement="right" title="添加子组件">
+                                      <li>
+                                        <UserAddOutlined onClick={addChildComponent(index)} />
+                                      </li>
+                                    </Tooltip>
+                                  )}
                                 </ul>
                               </div>
                             </>
                           )}
-                          <div className={style.componentInstanceWrapper}>
+                          {/* <div className={style.componentInstanceWrapper}>
                             {renderComponent({component, isEdit})}
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     )}

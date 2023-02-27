@@ -65,10 +65,10 @@
       }
 
       .componentCoverWrapper {
-        position: absolute;
+        // position: absolute;
         left: 0;
         top: 0;
-        z-index: 10000;
+        // z-index: 10000;
         width: 100%;
         height: 100%;
 
@@ -155,4 +155,17 @@
       }
     }
   }
+}
+
+.confirm5e {
+  display: flex;
+  flex-direction: column;
+}
+
+.confirm5e div {
+  padding: 16px 22px;
+  margin: 4px 10px;
+  border: 1px solid #eee;
+  border-radius: 4px;
+  cursor: pointer;
 }

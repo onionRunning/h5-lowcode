@@ -143,6 +143,16 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
     setPre({isShow: true, content: createHtml(data)})
   }
 
+  const updateComponents = (type, i) => {
+    console.info(type, i, '父组件')
+    if (components[i].children?.length) {
+      components[i].children.push({name: type, props: {}, scheme: {}})
+    } else {
+      components[i].children = [{name: type, props: {}, scheme: {}}]
+    }
+    setComponents([...components])
+  }
+
   console.info(isPre.content, 'components123')
   return (
     <div className={style.wrapper}>
@@ -181,6 +191,7 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
           onMove={moveComponent}
           onSwap={swapComponent}
           setting={pageSetting}
+          updateComponents={updateComponents}
         />
         <div
           className={cls(

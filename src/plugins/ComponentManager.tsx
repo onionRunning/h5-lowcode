@@ -8,6 +8,7 @@ import {ImgTextTab} from './components/Tab'
 import {Footer} from './components/Footer'
 import {ImgTextList} from './components/List'
 import {Header} from './components/Header'
+import Block from './components/Block'
 
 plugins.components.register('Header', Header)
 plugins.components.addToGroup('头部', ['Header'])
@@ -36,3 +37,6 @@ plugins.components.addToGroup('轮播图', ['Carousel'])
 
 // plugins.components.register('Footer', Footer);
 // plugins.components.addToGroup('页脚', ['Footer']);
+
+plugins.components.register('Block', Block)
+plugins.components.addToGroup('块级组件', ['Block'])

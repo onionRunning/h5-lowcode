@@ -40,4 +40,5 @@ export interface IComponentData {
 export interface IComponent extends IComponentData {
   defaultFns?: string
   fns: string
+  children?: any[]
 }

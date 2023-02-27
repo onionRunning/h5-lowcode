@@ -5,8 +5,8 @@ const compose = (App, fns = []) => {
   return fns.reduce((a, fn) => fn(a), App)
 }
 
-export const renderComponent = ({component, isEdit}) => {
-  const {name, schema, fns = [], props} = component
+export const renderComponent = ({component, isEdit, updateProps}) => {
+  const {name, schema, fns = [], props, children} = component
   const Component = plugins.components.get(name)
 
   if (!Component) {
@@ -14,10 +14,10 @@ export const renderComponent = ({component, isEdit}) => {
   }
 
   if (isEdit || !fns.length) {
-    return <Component {...props} />
+    return <Component oth={component} updateProps={updateProps} {...props} />
   }
 
   const functions = []
 
-  return compose(<Component {...props} />, functions)
+  return compose(<Component oth={component} updateProps={updateProps} {...props} />, functions)
 }
