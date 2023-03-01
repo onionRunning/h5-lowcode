@@ -57,13 +57,15 @@ export const UnionEditor = ({bindKey, value, schema, onChange: rootOnChange}) =>
           {Object.keys(value).map(key => {
             return value[key] && typeof value[key] === 'object' ? (
               <Panel
-                header={<span className={style.pannellHeader}>{subSchema[key].title || '组'}</span>}
+                header={
+                  <span className={style.pannellHeader}>{subSchema?.[key]?.title || '组'}</span>
+                }
                 key={key}>
                 {Object.keys(value[key]).map(subKey => {
                   return renderEditorItem(
                     subKey,
                     value[key][subKey],
-                    subSchema[key][subKey],
+                    subSchema[key]?.[subKey],
                     (subKey, newVal) => {
                       set(rootNewValue, `${key}.${subKey}`, newVal)
                       rootOnChange(rootNewValue)

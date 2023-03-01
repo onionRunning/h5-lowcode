@@ -84,7 +84,7 @@ export const FunctionEditor: React.FC<IProps> = ({fns: defaultFns, onChange}) =>
     addFunction(clone(plugins.functions.getObjsByGroup(group)[0]), group)
   }
 
-  console.info(fns, 'fns')
+  // console.info(fns, 'fns')
   return (
     <div className={style.wrapper}>
       <Dropdown overlay={getMenu({groups, onClick: onGroupChange})} placement="bottomLeft">

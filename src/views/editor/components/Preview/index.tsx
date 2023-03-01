@@ -43,8 +43,9 @@ export const Preview: React.FC<any> = ({
   onCopy,
   onDelete,
   updateComponents,
+  updateChildProps,
 }) => {
-  const isEdit = mode === 'edit'
+  const isEdit = mode === 'edit' || mode === 'editChild'
   const pageStyle = transformPageStyle({setting})
   delete pageStyle.minHeight
   delete pageStyle.height
@@ -113,13 +114,13 @@ export const Preview: React.FC<any> = ({
   }
 
   const addChildren = (type: string, i: number) => () => {
-    console.info(type, i, components)
+    // console.info(type, i, components)
     updateComponents(type, i)
   }
 
   // 打开子组件弹窗
   const addChildComponent = (i: number) => () => {
-    console.info('six', i)
+    // console.info('six', i)
     Modal.info({
       style: {left: 20, bottom: 20},
       title: '可选择下列子组件插入块级组件中',
@@ -136,13 +137,14 @@ export const Preview: React.FC<any> = ({
     })
   }
 
-  const updateProps = (...t: any) => {
-    console.info(t)
+  const updateProps = (t: any) => {
+    // console.info(t, '0000000yyyyyyyttttttt')
+    updateChildProps(t)
   }
 
-  console.info(components, 'components-------------------update')
+  // console.info(components, 'components-------------------update')
   return (
-    <div className={cls(style.wrapper, isEdit ? false : style.isPreview)}>
+    <div className={cls(style.wrapper, isEdit ? false : style.isPreview)} onClick={onClosePreview}>
       <div
         className={cls(style.closePreviewWrapper, isEdit ? false : style.isPreview)}
         onClick={onClosePreview}>
@@ -159,7 +161,10 @@ export const Preview: React.FC<any> = ({
                 ref={droppableProvided.innerRef}
                 style={getListStyle(droppableSnapshot.isDraggingOver)}>
                 {components.map((component, index) => (
-                  <Draggable draggableId={component.id} index={index} key={component.id}>
+                  <Draggable
+                    draggableId={component.id}
+                    index={index}
+                    key={`${component.id}_${index}`}>
                     {(draggableProvided, draggableSnapshot) => (
                       <div
                         ref={draggableProvided.innerRef}
@@ -187,7 +192,12 @@ export const Preview: React.FC<any> = ({
                                   onEdit(index)
                                 }}>
                                 <div className={style.componentInstanceWrapper}>
-                                  {renderComponent({component, isEdit, updateProps})}
+                                  {renderComponent({
+                                    component,
+                                    isEdit,
+                                    updateProps,
+                                    id: `${component.id}_${index}`,
+                                  })}
                                 </div>
                               </div>
                               {/* 组件操作 */}

@@ -11,7 +11,7 @@ class MyApp extends App {
       const el = document.querySelector('#holderStyle')
       el.parentNode.removeChild(el)
     } catch (e) {
-      console.info(e)
+      // console.info(e)
     }
   }
 
@@ -20,7 +20,7 @@ class MyApp extends App {
       const el = document.querySelector('#holderStyle')
       el.parentNode.removeChild(el)
     } catch (e) {
-      console.info(e)
+      // console.info(e)
     }
   }
 

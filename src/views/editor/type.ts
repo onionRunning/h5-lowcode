@@ -1,4 +1,4 @@
-export type Mode = 'edit' | 'preview'
+export type Mode = 'edit' | 'preview' | 'editChild'
 
 export interface IPageSetting {
   name: string

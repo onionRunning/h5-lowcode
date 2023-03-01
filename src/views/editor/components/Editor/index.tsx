@@ -12,7 +12,8 @@ interface IProps {
   component: IComponent | null
   componentIndex: number
   setting: IPageSetting | null
-  onPropsChange(props: Pick<IComponent, 'props'>): void
+  oth?: any
+  onPropsChange(props: Pick<IComponent, 'props'>, t?: any): void
   onFunctionsChange(): void
   onSettingChange(arg: IPageSetting): void
   onClose(): void
@@ -24,6 +25,7 @@ export const Editor: React.FC<IProps> = ({
   onPropsChange,
   onFunctionsChange,
   onClose,
+  oth,
 }) => {
   // console.info(componentIndex, '页面编辑:componentIndex', component)
   const [keys, setKeys] = useState('')
@@ -42,7 +44,12 @@ export const Editor: React.FC<IProps> = ({
       <main>
         <Tabs defaultActiveKey="props" onChange={getTabs} size="small">
           <TabPane key="props" tab="属性">
-            <PropsEditor component={component} onChange={onPropsChange} />
+            <PropsEditor
+              component={component}
+              componentIndex={componentIndex}
+              onChange={onPropsChange}
+              oth={oth}
+            />
           </TabPane>
           <TabPane key="function" tab="函数">
             <FnEditor

@@ -2,7 +2,7 @@ import React from 'react'
 import {Input, Avatar} from 'antd'
 import style from './index.module.scss'
 
-export const TextEditor = ({schema, value, onChange}) => {
+export const TextEditor = ({type, schema, value, onChange}) => {
   const {width, height} = schema
 
   return (
@@ -12,7 +12,7 @@ export const TextEditor = ({schema, value, onChange}) => {
         <span className={style.desc}>{schema.desc}</span>
       </p>
       <div>
-        <Input onChange={e => onChange(e.target.value)} value={value} />
+        <Input disabled={type === 'id'} onChange={e => onChange(e.target.value)} value={value} />
       </div>
     </div>
   )

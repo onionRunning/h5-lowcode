@@ -1,53 +1,38 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {paddingCss, paddingCssSchema, marginCss, marginCssSchema} from '@/views/editor'
 import style from './index.module.css'
+import BlockItem from './BlockItem'
+import {getBlockStyle} from './utils'
 
 const Block = (props: any) => {
+  console.info(props, '----')
+  const [idxx, setItem] = useState(0)
+  const updateItem = () => {
+    setItem(t => t + 1)
+  }
+  // console.info(idxx, '---123')
   const renderChildRen = () => {
-    console.info('----------------------------', {...props.style.margin, ...props.style.padding})
+    // console.info('----------------------------', {...props.style.margin, ...props.style.padding})
     return (
       props?.oth?.children?.map((item, index) => {
-        if (item.name === 'ph') {
-          return (
-            <div
-              className={style.ph}
-              key={index}
-              onClick={props?.updateProps?.(props.oth.id, item, index)}>
-              ph
-            </div>
-          )
-        }
-        if (item.name === 'img') {
-          return (
-            <div
-              className={style.img}
-              key={index}
-              onClick={props?.updateProps?.(props.oth.id, item, index)}>
-              img
-            </div>
-          )
-        }
-        if (item.name === 'btn') {
-          return (
-            <div
-              className={style.btn}
-              key={index}
-              onClick={props?.updateProps?.(props.oth.id, item, index)}>
-              btn
-            </div>
-          )
-        }
+        const obj = {parentId: props.oth.id, currentId: index, item, props}
         return (
-          <div className={style.normal} key={index}>
-            11
-          </div>
+          <BlockItem
+            id={idxx}
+            item={{...item, index}}
+            key={index}
+            updateProps={() => props.updateProps(obj)}
+          />
         )
       }) || ''
     )
   }
 
   return (
-    <div className={style.block} style={{...props.style.margin, ...props.style.padding}}>
+    <div
+      className={style.block}
+      onClick={updateItem}
+      style={{...props.style.margin, ...props.style.padding, ...getBlockStyle(props)}}>
       {renderChildRen()}
     </div>
   )

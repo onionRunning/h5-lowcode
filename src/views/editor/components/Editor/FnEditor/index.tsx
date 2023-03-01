@@ -3,7 +3,7 @@ import {Input} from 'antd'
 import styles from './index.module.scss'
 
 function FnEditor(props: {fns: string; contents: any; onChange(...s: any): void}) {
-  console.info('fn_editor', props)
+  // console.info('fn_editor', props)
   const ref = useRef<any>()
 
   const getStr = () => {

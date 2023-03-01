@@ -62,6 +62,7 @@ export const renderEditorItem = (key, propsValue, schema, onChange) => {
       key={key}
       onChange={v => onChange(key, v)}
       schema={schema}
+      type={key}
       value={propsValue}
       {...{bindKey: key}}
     />

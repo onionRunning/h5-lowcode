@@ -3,12 +3,12 @@ import style from './index.module.scss'
 
 export const Header = ({text, ...oth}) => {
   const [imgStyle, setImgStyle] = useState({})
-  console.info(oth, '----')
+  // console.info(oth, '----')
   const enterEditor = () => {
-    console.info('进入编辑状态')
+    // console.info('进入编辑状态')
     setImgStyle({border: '1px dashed #fao'})
   }
-  console.info(imgStyle, 'imgStyle')
+  // console.info(imgStyle, 'imgStyle')
   return (
     <div className={style.wrapper} style={{...oth}}>
       {/* 左边 */}

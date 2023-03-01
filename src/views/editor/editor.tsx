@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/restrict-plus-operands */
-import React, {useState} from 'react'
+import React, {useRef, useState} from 'react'
 import clone from 'lodash/clone'
 import cls from 'classnames'
 import {Mode, IComponent, IPageSetting} from './type'
@@ -10,6 +10,7 @@ import {Editor as PropsEditor} from './components/Editor'
 import style from './index.module.scss'
 import {createHtml} from '@/global/tools'
 import {downloadHtml} from '@/global/utils'
+import {getTypeConfigs} from './utils'
 
 const isProd = process.env.NODE_ENV === 'production'
 
@@ -23,6 +24,7 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
   const [loading, setLoading] = useState<boolean>(false)
 
   const [mode, setMode] = useState<Mode>('edit')
+  const clickChild = useRef<any>({})
   const [isPre, setPre] = useState({isShow: false, content: ''})
   const [componentPannelVisible, setComponentPannelVisible] = useState<boolean>(true)
   const [propsEditorVisible, setPropsEditorVisible] = useState<boolean>(true)
@@ -51,11 +53,20 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
   }
 
   // 编辑当前组件 props
-  const editCurrentComponentProps = newProps => {
+  const editCurrentComponentProps = (newProps, t) => {
+    console.info(t, '------t')
     setComponents(components => {
       const target = clone(components[currentIndex])
       target.props = newProps
-      console.info(target.props, '-----six')
+      if (t) {
+        target.children = target.children.map((item, index) => {
+          if (index === t.childId) {
+            return {...item, props: newProps}
+          }
+          return item
+        })
+      }
+      // console.info(target.props, '-----six')
       components.splice(currentIndex, 1, target)
       setCurrent(target)
       return components
@@ -124,7 +135,7 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
         fns: component.fns,
       }
     })
-    console.info(createHtml(data), '------------------>')
+    // console.info(createHtml(data), '------------------>')
     setLoading(false)
     downloadHtml(createHtml(data))
   }
@@ -139,21 +150,28 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
         fns: component.fns,
       }
     })
-    console.info(data, '------------------>')
+    // console.info(data, '------------------>')
     setPre({isShow: true, content: createHtml(data)})
   }
 
   const updateComponents = (type, i) => {
-    console.info(type, i, '父组件')
+    // console.info(type, i, '父组件')
     if (components[i].children?.length) {
-      components[i].children.push({name: type, props: {}, scheme: {}})
+      components[i].children.push(getTypeConfigs(type))
     } else {
-      components[i].children = [{name: type, props: {}, scheme: {}}]
+      components[i].children = [getTypeConfigs(type)]
     }
     setComponents([...components])
   }
 
-  console.info(isPre.content, 'components123')
+  // 更新块级组件 -> 子组件属性
+  const updateChildProps = t => {
+    // console.info(t, '-----')
+    clickChild.current = t
+    setMode('editChild')
+  }
+
+  // console.info(isPre.content, 'components123', current?.children?.[clickChild?.current?.currentId], '-------111')
   return (
     <div className={style.wrapper}>
       {/* 头部区域 */}
@@ -191,6 +209,7 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
           onMove={moveComponent}
           onSwap={swapComponent}
           setting={pageSetting}
+          updateChildProps={updateChildProps}
           updateComponents={updateComponents}
         />
         <div
@@ -200,18 +219,35 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
             current && propsEditorVisible ? style.isVisible : false
           )}>
           {/* 右边编辑区 */}
-          <PropsEditor
-            component={current}
-            componentIndex={currentIndex}
-            onClose={() => setPropsEditorVisible(false)}
-            onFunctionsChange={unsafeUpdate}
-            onPropsChange={editCurrentComponentProps}
-            onSettingChange={setting => {
-              setPageSetting(setting)
-              unsafeUpdate()
-            }}
-            setting={pageSetting}
-          />
+          {mode === 'edit' && (
+            <PropsEditor
+              component={current}
+              componentIndex={currentIndex}
+              onClose={() => setPropsEditorVisible(false)}
+              onFunctionsChange={unsafeUpdate}
+              onPropsChange={editCurrentComponentProps}
+              onSettingChange={setting => {
+                setPageSetting(setting)
+                unsafeUpdate()
+              }}
+              setting={pageSetting}
+            />
+          )}
+          {mode === 'editChild' && (
+            <PropsEditor
+              component={current.children[clickChild.current.currentId]}
+              componentIndex={currentIndex}
+              onClose={() => setPropsEditorVisible(false)}
+              onFunctionsChange={unsafeUpdate}
+              onPropsChange={editCurrentComponentProps}
+              onSettingChange={setting => {
+                setPageSetting(setting)
+                unsafeUpdate()
+              }}
+              oth={{current, childId: clickChild.current.currentId}}
+              setting={pageSetting}
+            />
+          )}
         </div>
       </main>
 

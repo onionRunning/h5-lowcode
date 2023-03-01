@@ -7,7 +7,7 @@ export const Carousel = ({autoplay, dotPosition, carousels = [], style: commonSt
   const sty = oth.imgHeight ? {height: oth.imgHeight} : {}
   const carSty = oth.height ? {height: oth.height} : {}
 
-  console.info(sty, 'carousels')
+  // console.info(sty, 'carousels')
   return (
     <div className={style.wrapper} style={transformStyle(commonStyle)}>
       <ACarousel autoplay={autoplay} dotPosition={dotPosition} style={carSty}>

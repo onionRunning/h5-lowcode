@@ -23,10 +23,10 @@ export const fontCssSchema = {
 }
 
 export const paddingCss: React.CSSProperties = {
-  paddingTop: 8,
-  paddingRight: 8,
-  paddingBottom: 8,
-  paddingLeft: 8,
+  paddingTop: 16,
+  paddingRight: 16,
+  paddingBottom: 16,
+  paddingLeft: 16,
 }
 export const paddingCssSchema = {
   title: '内边距',

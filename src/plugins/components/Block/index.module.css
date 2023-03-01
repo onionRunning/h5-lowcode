@@ -1,21 +1,29 @@
 .block {
-    width: 100%;
-    min-height: 48px;
+    /* width: 100%; */
+    /* min-height: 48px; */
     height: auto;
     background-color: #efefef;
+    box-sizing: content-box;
 }
 
 .ph {
     color: #fa0;
     padding: 16px;
+    border: 1px solid transparent;
+}
+
+.ph:hover, .btn:hover, .img:hover {
+    border: 1px dashed #fa0;
 }
 
 .img {
     padding: 16px;
+    border: 1px solid transparent;
 }
 
 .btn {
     padding: 16px;
+    border: 1px solid transparent;
 }
 
 .normal {
