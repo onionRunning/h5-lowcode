@@ -15,7 +15,7 @@ export const Carousel = ({autoplay, dotPosition, carousels = [], style: commonSt
           return (
             <img
               key={index}
-              onClick={() => window.open(carousel.link)}
+              // onClick={() => window.open(carousel.link)}
               src={carousel.url}
               style={sty}
             />
@@ -31,15 +31,12 @@ Carousel.defaultProps = {
   carousels: [
     {
       url: 'https://gd2.alicdn.com/imgextra/i1/1094533563/TB2BFUoxH1YBuNjSszhXXcUsFXa_!!1094533563.jpg_400x400.jpg',
-      link: '',
     },
     {
       url: 'https://seopic.699pic.com/photo/40005/6885.jpg_wh1200.jpg',
-      link: '',
     },
     {
       url: 'http://t14.baidu.com/it/u=3047410229,4044637632&fm=224&app=112&f=JPEG?w=500&h=500',
-      link: '',
     },
   ],
 }

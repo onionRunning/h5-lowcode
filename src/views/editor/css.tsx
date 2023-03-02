@@ -15,11 +15,11 @@ export const fontCssSchema = {
     title: '颜色',
     type: 'color',
   },
-  textAlign: {
-    title: '对齐方式',
-    type: 'radio',
-    options: ['left', 'center', 'right'],
-  },
+  // textAlign: {
+  //   title: '对齐方式',
+  //   type: 'radio',
+  //   options: ['left', 'center', 'right'],
+  // },
 }
 
 export const paddingCss: React.CSSProperties = {

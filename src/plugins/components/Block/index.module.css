@@ -1,24 +1,31 @@
 .block {
-    /* width: 100%; */
+    width: 100%;
     /* min-height: 48px; */
     height: auto;
     background-color: #efefef;
-    box-sizing: content-box;
+    box-sizing: border-box;
+    flex-wrap: wrap;
+
 }
 
 .ph {
-    color: #fa0;
-    padding: 16px;
+    display: block;
+    color: #000;
     border: 1px solid transparent;
+    word-wrap: break-word;
+    white-space: pre-wrap;
+    line-height: 1.5;
 }
 
 .ph:hover, .btn:hover, .img:hover {
-    border: 1px dashed #fa0;
+    border: 1px dashed #000;
 }
 
 .img {
-    padding: 16px;
     border: 1px solid transparent;
+    width: 32px;
+    height: 32px;
+    border-radius: 4px;
 }
 
 .btn {

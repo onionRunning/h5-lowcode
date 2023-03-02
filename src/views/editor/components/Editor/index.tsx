@@ -13,6 +13,7 @@ interface IProps {
   componentIndex: number
   setting: IPageSetting | null
   oth?: any
+  mode?: string
   onPropsChange(props: Pick<IComponent, 'props'>, t?: any): void
   onFunctionsChange(): void
   onSettingChange(arg: IPageSetting): void
@@ -26,6 +27,7 @@ export const Editor: React.FC<IProps> = ({
   onFunctionsChange,
   onClose,
   oth,
+  mode,
 }) => {
   // console.info(componentIndex, '页面编辑:componentIndex', component)
   const [keys, setKeys] = useState('')
@@ -47,6 +49,7 @@ export const Editor: React.FC<IProps> = ({
             <PropsEditor
               component={component}
               componentIndex={componentIndex}
+              mode={mode}
               onChange={onPropsChange}
               oth={oth}
             />

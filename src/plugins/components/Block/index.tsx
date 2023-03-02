@@ -5,7 +5,7 @@ import BlockItem from './BlockItem'
 import {getBlockStyle} from './utils'
 
 const Block = (props: any) => {
-  console.info(props, '----')
+  console.info(props, '----block')
   const [idxx, setItem] = useState(0)
   const updateItem = () => {
     setItem(t => t + 1)
@@ -18,13 +18,15 @@ const Block = (props: any) => {
         const obj = {parentId: props.oth.id, currentId: index, item, props}
         return (
           <BlockItem
+            childrenId={props.childrenId}
             id={idxx}
+            index={index}
             item={{...item, index}}
             key={index}
             updateProps={() => props.updateProps(obj)}
           />
         )
-      }) || ''
+      }) || 'block'
     )
   }
 
@@ -42,10 +44,10 @@ export default Block
 
 Block.defaultProps = {
   backgroundColor: '#efefef',
-  height: 48,
   fontSize: 16,
   color: '#fff',
   id: 'block-5e-',
+  display: 'flex',
   style: {
     margin: marginCss,
     padding: paddingCss,
@@ -61,9 +63,15 @@ Block.schema = {
     title: '背景色',
     type: 'color',
   },
-  height: {
-    title: '组件高度',
-    type: 'number',
+  display: {
+    title: '布局',
+    type: 'radio',
+    options: ['block', 'flex'],
+  },
+  'just-content': {
+    title: '布局',
+    type: 'radio',
+    options: ['center', 'space-between', 'flex-start'],
   },
   style: {
     type: 'children',

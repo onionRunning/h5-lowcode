@@ -57,7 +57,6 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
     console.info(t, '------t')
     setComponents(components => {
       const target = clone(components[currentIndex])
-      target.props = newProps
       if (t) {
         target.children = target.children.map((item, index) => {
           if (index === t.childId) {
@@ -65,6 +64,8 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
           }
           return item
         })
+      } else {
+        target.props = newProps
       }
       // console.info(target.props, '-----six')
       components.splice(currentIndex, 1, target)
@@ -169,6 +170,7 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
     // console.info(t, '-----')
     clickChild.current = t
     setMode('editChild')
+    unsafeUpdate()
   }
 
   // console.info(isPre.content, 'components123', current?.children?.[clickChild?.current?.currentId], '-------111')
@@ -196,6 +198,7 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
         </div>
         {/* 预览组件区 */}
         <Preview
+          childrenId={clickChild?.current?.currentId}
           components={components}
           mode={mode}
           onClosePreview={() => setMode('edit')}
@@ -235,8 +238,9 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
           )}
           {mode === 'editChild' && (
             <PropsEditor
-              component={current.children[clickChild.current.currentId]}
+              component={current?.children?.[clickChild?.current?.currentId]}
               componentIndex={currentIndex}
+              mode={mode}
               onClose={() => setPropsEditorVisible(false)}
               onFunctionsChange={unsafeUpdate}
               onPropsChange={editCurrentComponentProps}

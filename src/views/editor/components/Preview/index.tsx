@@ -44,6 +44,7 @@ export const Preview: React.FC<any> = ({
   onDelete,
   updateComponents,
   updateChildProps,
+  childrenId,
 }) => {
   const isEdit = mode === 'edit' || mode === 'editChild'
   const pageStyle = transformPageStyle({setting})
@@ -121,14 +122,32 @@ export const Preview: React.FC<any> = ({
   // 打开子组件弹窗
   const addChildComponent = (i: number) => () => {
     // console.info('six', i)
-    Modal.info({
+    const modals = Modal.info({
       style: {left: 20, bottom: 20},
       title: '可选择下列子组件插入块级组件中',
       content: (
         <div className={style.confirm5e}>
-          <div onClick={addChildren('ph', i)}>段落</div>
-          <div onClick={addChildren('img', i)}>图片</div>
-          <div onClick={addChildren('btn', i)}>按钮</div>
+          <div
+            onClick={() => {
+              addChildren('ph', i)()
+              modals.destroy()
+            }}>
+            段落
+          </div>
+          <div
+            onClick={() => {
+              addChildren('img', i)()
+              modals.destroy()
+            }}>
+            图片
+          </div>
+          <div
+            onClick={() => {
+              addChildren('block', i)()
+              modals.destroy()
+            }}>
+            块级组件
+          </div>
         </div>
       ),
       onOk: () => {
@@ -197,40 +216,43 @@ export const Preview: React.FC<any> = ({
                                     isEdit,
                                     updateProps,
                                     id: `${component.id}_${index}`,
+                                    childrenId,
                                   })}
                                 </div>
                               </div>
                               {/* 组件操作 */}
-                              <div className={style.toolboxWrapper}>
-                                <ul>
-                                  <li>
-                                    <Tooltip placement="right" title="上移">
-                                      <ArrowUpOutlined onClick={() => moveComponent('up')} />
-                                    </Tooltip>
-                                    <Divider className={style.dividerWrapper} />
-                                    <Tooltip placement="right" title="下移">
-                                      <ArrowDownOutlined onClick={() => moveComponent('down')} />
-                                    </Tooltip>
-                                  </li>
-                                  <Tooltip placement="right" title="复制">
+                              {mode === 'edit' && (
+                                <div className={style.toolboxWrapper}>
+                                  <ul>
                                     <li>
-                                      <CopyOutlined onClick={copy} />
+                                      <Tooltip placement="right" title="上移">
+                                        <ArrowUpOutlined onClick={() => moveComponent('up')} />
+                                      </Tooltip>
+                                      <Divider className={style.dividerWrapper} />
+                                      <Tooltip placement="right" title="下移">
+                                        <ArrowDownOutlined onClick={() => moveComponent('down')} />
+                                      </Tooltip>
                                     </li>
-                                  </Tooltip>
-                                  <Tooltip placement="right" title="删除">
-                                    <li>
-                                      <DeleteOutlined onClick={deleteComponent} />
-                                    </li>
-                                  </Tooltip>
-                                  {component.name === 'Block' && (
-                                    <Tooltip placement="right" title="添加子组件">
+                                    <Tooltip placement="right" title="复制">
                                       <li>
-                                        <UserAddOutlined onClick={addChildComponent(index)} />
+                                        <CopyOutlined onClick={copy} />
                                       </li>
                                     </Tooltip>
-                                  )}
-                                </ul>
-                              </div>
+                                    <Tooltip placement="right" title="删除">
+                                      <li>
+                                        <DeleteOutlined onClick={deleteComponent} />
+                                      </li>
+                                    </Tooltip>
+                                    {component.name === 'Block' && (
+                                      <Tooltip placement="right" title="添加子组件">
+                                        <li>
+                                          <UserAddOutlined onClick={addChildComponent(index)} />
+                                        </li>
+                                      </Tooltip>
+                                    )}
+                                  </ul>
+                                </div>
+                              )}
                             </>
                           )}
                           {/* <div className={style.componentInstanceWrapper}>

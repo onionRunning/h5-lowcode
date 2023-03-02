@@ -19,7 +19,7 @@ export const RadioEditor = ({schema, value, onChange}) => {
           onChange={e => {
             onChange(e.target.value)
           }}
-          style={{overflowX: 'hidden'}}
+          // style={{overflowX: 'hidden'}}
           value={value}>
           {options.map(option => (
             <Radio key={option.value} value={option.value}>
