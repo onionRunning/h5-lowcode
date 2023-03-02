@@ -1,6 +1,7 @@
-import {data} from '@/global/demo'
+import {data1, data2} from '@/global/demo'
 import {createHtml} from '@/global/tools'
 import {Card} from 'antd'
+import {useRouter} from 'next/router'
 import React, {useState} from 'react'
 const gridStyle = {
   width: '25%',
@@ -8,20 +9,33 @@ const gridStyle = {
   cursor: 'pointer',
 } as React.CSSProperties
 export const Lists = () => {
+  const router = useRouter()
   const [showType, setShowType] = useState('')
 
-  const open = () => {
-    setShowType('demo1')
+  const open = e => {
+    e.stopPropagation()
+    setShowType('data1')
+  }
+
+  const linkToEditor = () => {
+    router.push('/editor')
   }
 
   const isShow = !!showType
   return (
     <div>
-      <Card title="demo区">
+      <Card onClick={linkToEditor} title="demo区">
         <Card.Grid onClick={open} style={gridStyle}>
           简单网页1
         </Card.Grid>
-        <Card.Grid style={gridStyle}>Content</Card.Grid>
+        <Card.Grid
+          onClick={e => {
+            e.stopPropagation()
+            setShowType('data2')
+          }}
+          style={gridStyle}>
+          简单网页2
+        </Card.Grid>
         <Card.Grid style={gridStyle}>Content</Card.Grid>
         <Card.Grid style={gridStyle}>Content</Card.Grid>
         <Card.Grid style={gridStyle}>Content</Card.Grid>
@@ -43,7 +57,7 @@ export const Lists = () => {
             backgroundColor: 'rgba(0, 0, 0, 0.2)',
           }}>
           <iframe
-            srcDoc={createHtml(data)}
+            srcDoc={createHtml(showType === 'data1' ? data1 : data2)}
             style={{width: '375px', height: '90vh', marginTop: '5vh', backgroundColor: '#fff'}}
           />
           <div
