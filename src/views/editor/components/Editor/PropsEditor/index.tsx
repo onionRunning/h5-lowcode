@@ -47,7 +47,7 @@ export const PropsEditor: React.FC<IProps> = ({component, componentIndex, onChan
   }
 
   // console.info(schema, 'schema', props, component)
-  console.info(oth, '====11111=====')
+  // console.info(oth, '====11111=====')
   return (
     <ul>
       {renderDelete()}

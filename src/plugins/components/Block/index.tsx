@@ -5,7 +5,7 @@ import BlockItem from './BlockItem'
 import {getBlockStyle} from './utils'
 
 const Block = (props: any) => {
-  // console.info(props, '----block')
+  console.info(props, '----block')
   const [idxx, setItem] = useState(0)
   const updateItem = () => {
     setItem(t => t + 1)
@@ -43,7 +43,7 @@ const Block = (props: any) => {
 export default Block
 
 Block.defaultProps = {
-  backgroundColor: '#efefef',
+  backgroundColor: '#fff',
   fontSize: 16,
   color: '#fff',
   id: 'block-5e-',

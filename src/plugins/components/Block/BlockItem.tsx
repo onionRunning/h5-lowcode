@@ -1,4 +1,5 @@
 import React, {useEffect, useState} from 'react'
+import Block from '.'
 import style from './index.module.css'
 import {getPhStyle} from './utils'
 
@@ -51,10 +52,11 @@ function BlockItem(props: any) {
       />
     )
   }
-  if (item?.name === 'btn') {
+  if (item?.name === 'block') {
+    console.info(item, '------')
     return (
       <div className={style.btn} key={item.index} onClick={() => props?.updateProps?.()}>
-        btn
+        <Block />
       </div>
     )
   }

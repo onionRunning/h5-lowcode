@@ -1,3 +1,4 @@
+import Block from '@/plugins/components/Block'
 import {fontCss, fontCssSchema, marginCss, marginCssSchema, paddingCss, paddingCssSchema} from '.'
 
 export const getTypeConfigs = (type: string) => {
@@ -81,6 +82,22 @@ export const getTypeConfigs = (type: string) => {
           schema: {
             margin: marginCssSchema,
           },
+        },
+      },
+    }
+  }
+  if (type === 'block') {
+    return {
+      name: type,
+      props: {
+        backgroundColor: '#fff',
+        fontSize: 16,
+        color: '#fff',
+        // id: 'block-5e-',
+        display: 'flex',
+        style: {
+          margin: marginCss,
+          padding: paddingCss,
         },
       },
     }

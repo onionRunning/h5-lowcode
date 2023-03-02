@@ -23,6 +23,8 @@ export const createHtml = (componentsLists: any[]) => {
     if (componentsLists[i].name === 'Block') {
       //
       console.info(componentsLists[i], 'block')
+      htmlStr += `\n${blockHtmlStr(componentsLists[i])}`
+      cssStr += `\n${blockCssStr(componentsLists[i])}`
     }
   }
   return htmlTemplate(htmlStr, tempCss(cssStr), `${tempJs(jsStr)}`)
@@ -267,4 +269,86 @@ const carouseJsStr = data => {
       start${data.id}()
   `
   return jsStr
+}
+
+export const blockHtmlStr = data => {
+  console.info(data, '---------data')
+  let childStr = '\n'
+  data.children?.forEach((item, index) => {
+    if (item.name === 'ph') {
+      childStr += `\n
+          <div id="${data.name}-${data.id}-${item.name}-${index}">
+            ${item.props.text}
+          </div>
+      `
+    }
+    if (item.name === 'img') {
+      childStr += `\n
+          <img id="${data.name}-${data.id}-${item.name}-${index}" src=${
+        item.props.url || 'https://avatars.githubusercontent.com/u/7843281?s=40&v=4'
+      }></img>
+      `
+    }
+  })
+  return `
+        <div id="${data.name}-${data.id}">
+          ${childStr}
+        </div>
+  `
+}
+
+export const blockCssStr = data => {
+  let childStr = '\n'
+  data.children?.forEach((item, index) => {
+    const {
+      marginTop = 0,
+      marginRight = 0,
+      marginBottom = 0,
+      marginLeft = 0,
+    } = item.props.style?.margin || {}
+
+    const {
+      paddingTop = 0,
+      paddingRight = 0,
+      paddingBottom = 0,
+      paddingLeft = 0,
+    } = item.props.style?.padding || {}
+
+    if (item.name === 'ph') {
+      childStr += `\n
+    #${data.name}-${data.id}-${item.name}-${index} {
+      word-wrap: break-word;
+      line-height: 1.5;
+      font-size: ${item.props.style.font.fontSize || 12}px;
+      color: ${item.props.style.font.color};
+      margin: ${marginTop}px ${marginRight}px ${marginBottom}px ${marginLeft}px; 
+      padding: ${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px;
+    }
+      `
+    }
+    if (item.name === 'img') {
+      childStr += `\n
+    #${data.name}-${data.id}-${item.name}-${index} {
+      margin: ${marginTop}px ${marginRight}px ${marginBottom}px ${marginLeft}px; 
+      padding: ${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px;
+      width: ${item.props.width || 32}px;
+      height: ${item.props.height || 32}px;
+    }      `
+    }
+  })
+  const base = data.props['just-content'] ? `justify-content: ${data.props['just-content']};` : ''
+
+  return `
+    #${data.name}-${data.id} {
+      background-color: ${data.props.backgroundColor};
+      display: ${data.props.display};
+      width: 100%;
+      height: auto;
+      box-sizing: border-box;
+      flex-wrap: wrap;
+      ${base}
+      padding: ${data.props.style.padding.paddingTop}px ${data.props.style.padding.paddingRight}px ${data.props.style.padding.paddingBottom}px ${data.props.style.padding.paddingLeft}px;
+    }
+    ${childStr}
+  `
 }

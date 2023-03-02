@@ -54,7 +54,7 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
 
   // 编辑当前组件 props
   const editCurrentComponentProps = (newProps, t) => {
-    console.info(t, '------t')
+    // console.info(t, '------t')
     setComponents(components => {
       const target = clone(components[currentIndex])
       if (t) {
@@ -132,8 +132,9 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
         id: component.id,
         name: component.name,
         props: component.props,
-        schema: component.schema,
+        // schema: component.schema,
         fns: component.fns,
+        children: component.children,
       }
     })
     // console.info(createHtml(data), '------------------>')
@@ -147,11 +148,12 @@ export const Editor: React.FC<IProps> = ({components: defaultComponents = []}) =
         id: component.id,
         name: component.name,
         props: component.props,
-        schema: component.schema,
+        // schema: component.schema,
         fns: component.fns,
+        children: component.children,
       }
     })
-    // console.info(data, '------------------>')
+    console.info(JSON.stringify(data), '------------------>')
     setPre({isShow: true, content: createHtml(data)})
   }
 
