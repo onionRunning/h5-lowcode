@@ -9,7 +9,7 @@ export const getBlockStyle = (payload: any) => {
   if (payload.display) {
     obj.display = payload.display
   }
-  console.info(payload, 'payload')
+  // console.info(payload, 'payload')
   if (payload['just-content']) {
     obj['justify-content'] = payload['just-content']
   }

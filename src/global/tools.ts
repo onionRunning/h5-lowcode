@@ -20,6 +20,10 @@ export const createHtml = (componentsLists: any[]) => {
       cssStr += `\n${carouseCssStr(componentsLists[i])}`
       jsStr += `\n${carouseJsStr(componentsLists[i])}`
     }
+    if (componentsLists[i].name === 'Block') {
+      //
+      console.info(componentsLists[i], 'block')
+    }
   }
   return htmlTemplate(htmlStr, tempCss(cssStr), `${tempJs(jsStr)}`)
 }

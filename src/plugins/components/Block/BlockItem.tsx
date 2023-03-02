@@ -11,7 +11,7 @@ function BlockItem(props: any) {
       setItem({})
     }
   }, [id])
-  console.info(props, 'block------item')
+  // console.info(props, 'block------item')
 
   if (item?.name === 'ph') {
     const phStyle =
