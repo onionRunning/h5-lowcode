@@ -273,17 +273,17 @@ const carouseJsStr = data => {
 
 export const blockHtmlStr = data => {
   console.info(data, '---------data')
-  let childStr = '\n'
+  let childStr = ''
   data.children?.forEach((item, index) => {
     if (item.name === 'ph') {
-      childStr += `\n
+      childStr += `
           <div id="${data.name}-${data.id}-${item.name}-${index}">
             ${item.props.text}
           </div>
       `
     }
     if (item.name === 'img') {
-      childStr += `\n
+      childStr += `
           <img id="${data.name}-${data.id}-${item.name}-${index}" src=${
         item.props.url || 'https://avatars.githubusercontent.com/u/7843281?s=40&v=4'
       }></img>
@@ -315,7 +315,7 @@ export const blockCssStr = data => {
     } = item.props.style?.padding || {}
 
     if (item.name === 'ph') {
-      childStr += `\n
+      childStr += `
     #${data.name}-${data.id}-${item.name}-${index} {
       word-wrap: break-word;
       line-height: 1.5;
@@ -327,7 +327,7 @@ export const blockCssStr = data => {
       `
     }
     if (item.name === 'img') {
-      childStr += `\n
+      childStr += `
     #${data.name}-${data.id}-${item.name}-${index} {
       margin: ${marginTop}px ${marginRight}px ${marginBottom}px ${marginLeft}px; 
       padding: ${paddingTop}px ${paddingRight}px ${paddingBottom}px ${paddingLeft}px;
